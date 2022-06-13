@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head></head>
+
+<body>
+  <div class="card">
+    <div class="card-header">
+      <h5 class="card-title">Update a New Record</h5>
+    </div>
+    <div class="card-body">
+      <form action="/item" method="POST">
+        <div>
+          <input type="text" placeholder="ItemName" id="ItemName"></input>
+        </div>
+        <br /><br />
+        <div>
+          <input type="text" placeholder="Location" id="Location"></input>
+        </div>
+        <br /><br />
+        <div>
+          <input type="number" placeholder="ItemPrice" id="ItemPrice"></input>
+        </div>
+        <br /><br />
+        <div>
+          <input type="text" placeholder="ItemBrand" id="ItemBrand"></input>
+        </div>
+        <br /><br />
+        <div>
+          <input type="text" placeholder="ItemCategory" id="ItemCategory"></input>
+        </div>
+        <br /><br />
+        <input type="submit" class="btn btn-success" id="createbtn">Create</input>
+        <br /><br />
+      </form>
+    </div>
+  </div>
+  <script>
+
+    const createbtn = document.querySelector('#createbtn');
+    function createitem() {
+      const params = new URLSearchParams(window.location.search)
+      const id = params.get('id')
+
+      const ItemName = document.querySelector('#ItemName').value;
+      const Location = document.querySelector('#Location').value;
+      const ItemPrice = document.querySelector('#ItemPrice').value;
+      const ItemBrand = document.querySelector('#ItemBrand').value;
+      const ItemCategory = document.querySelector('#ItemCategory').value;
+      console.log(ItemName);
+      const data = { ItemName, Location, ItemPrice: parseInt(ItemPrice), ItemBrand, ItemCategory }
+      fetch(`https://sportify-challenge.herokuapp.com/item/edit/${id}`, {
+        method: "PUT",
+        body: JSON.stringify(data),
+        headers: { "Content-type": "application/json; charset=UTF-8" }
+      })
+        .then(response => {response.json()
+          window.location.href = "/template/base.html";        
+        })
+
+        .then(json => console.log(json))
+
+        .catch(err => console.log(err));
+    }
+    createbtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      createitem()
+    });
+  </script>
+</body>
+
+</html>

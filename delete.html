@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head></head>
+
+<body>
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Create a New Record</h5>
+        </div>
+        <div class="card-body">
+        </div>
+    </div>
+    <script>
+
+        const params = new URLSearchParams(window.location.search)
+        const id = params.get('id')
+        const itemname = params.get('itemname')
+
+        if (confirm(`Are you sure you want to delete this ${itemname}item`) == true) {
+            fetch(`https://sportify-challenge.herokuapp.com/item/delete/${id}`, {
+                method: "DELETE",
+                headers: { "Content-type": "application/json; charset=UTF-8" }
+            })
+                .then(response => {
+                    response.json()
+                    window.location.href = "/template/base.html"
+                }
+
+                )
+
+                .then(json => console.log(json))
+
+                .catch(err => console.log(err));
+
+        }
+        else {
+            window.location.href = "/template/base.html";
+
+        }
+    </script>
+</body>
+
+</html>
